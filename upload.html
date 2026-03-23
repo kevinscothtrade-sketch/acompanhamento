@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Excel para JSON</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        #drop-area {
+            border: 2px dashed #d1d5db;
+            border-radius: 12px;
+            padding: 3rem;
+            text-align: center;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        #drop-area.highlight {
+            border-color: #3b82f6;
+            background-color: #eff6ff;
+        }
+    </style>
+</head>
+<body class="p-6">
+    <div class="max-w-xl w-full bg-white rounded-2xl shadow-lg p-8">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800">Converter Excel para JSON</h1>
+            <p class="text-gray-600 mt-2">Arraste e solte seu arquivo Excel ou selecione para converter e baixar o JSON.</p>
+        </header>
+
+        <div id="drop-area" class="border-4 border-dashed border-gray-300 rounded-xl p-10 mb-6 hover:border-blue-500 transition-colors duration-300">
+            <input type="file" id="fileElem" accept=".xlsx, .xls" class="hidden">
+            <label for="fileElem" class="block w-full h-full cursor-pointer">
+                <p class="text-lg text-gray-500">Arraste e solte o arquivo aqui</p>
+                <p class="text-sm text-gray-400 mt-2">ou clique para selecionar</p>
+            </label>
+        </div>
+
+        <div class="flex flex-col items-center">
+            <p id="file-name" class="text-sm text-gray-600 mb-4"></p>
+            <button id="convert-btn" class="bg-blue-600 text-white font-semibold py-3 px-6 rounded-full shadow-md hover:bg-blue-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50" style="display: none;">Converter e Baixar JSON</button>
+            <p id="status-message" class="text-sm mt-4 text-gray-600 hidden"></p>
+        </div>
+    </div>
+
+    <!-- Script da biblioteca xlsx.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    
+    <script>
+        const dropArea = document.getElementById('drop-area');
+        const fileElem = document.getElementById('fileElem');
+        const fileNameDisplay = document.getElementById('file-name');
+        const convertBtn = document.getElementById('convert-btn');
+        const statusMessage = document.getElementById('status-message');
+
+        let uploadedFile = null;
+
+        // Eventos de Drag and Drop
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, preventDefaults, false);
+        });
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropArea.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, unhighlight, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        function highlight() {
+            dropArea.classList.add('highlight');
+        }
+
+        function unhighlight() {
+            dropArea.classList.remove('highlight');
+        }
+
+        dropArea.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            handleFiles(files);
+        }
+
+        // Evento de seleção de arquivo
+        fileElem.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+
+        function handleFiles(files) {
+            if (files.length === 0) return;
+            uploadedFile = files[0];
+            fileNameDisplay.textContent = `Arquivo selecionado: ${uploadedFile.name}`;
+            convertBtn.style.display = 'block';
+            statusMessage.style.display = 'none';
+        }
+
+        // Evento de conversão
+        convertBtn.addEventListener('click', () => {
+            if (!uploadedFile) {
+                statusMessage.textContent = 'Por favor, selecione um arquivo primeiro.';
+                statusMessage.classList.add('text-red-500');
+                statusMessage.classList.remove('hidden');
+                return;
+            }
+
+            statusMessage.textContent = 'Convertendo...';
+            statusMessage.classList.remove('text-red-500', 'hidden');
+            statusMessage.classList.add('text-gray-600', 'block');
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const data = new Uint8Array(e.target.result);
+                const workbook = XLSX.read(data, { type: 'array' });
+                
+                // Converte a primeira aba do Excel em JSON
+                const firstSheetName = workbook.SheetNames[0];
+                const worksheet = workbook.Sheets[firstSheetName];
+                const jsonData = XLSX.utils.sheet_to_json(worksheet);
+
+                // Converte campos que podem ser lidos como string para número
+                const cleanData = jsonData.map(item => ({
+                    ...item,
+                    VISITAS: Number(item.VISITAS),
+                    PROPOSTAS: Number(item.PROPOSTAS),
+                    'PROP. FINLZD': Number(item['PROP. FINLZD']),
+                    MENSALIDADES: Number(item.MENSALIDADES),
+                    'TKT M\u00C9D': Number(item['TKT M\u00C9D']),
+                    STATUS: item.STATUS ? item.STATUS.trim() : ""
+                }));
+
+                // Baixa o arquivo JSON
+                const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(cleanData, null, 2));
+                const downloadAnchorNode = document.createElement('a');
+                downloadAnchorNode.setAttribute("href", dataStr);
+                downloadAnchorNode.setAttribute("download", "data.json");
+                document.body.appendChild(downloadAnchorNode);
+                downloadAnchorNode.click();
+                downloadAnchorNode.remove();
+
+                statusMessage.textContent = 'Arquivo data.json baixado com sucesso!';
+                statusMessage.classList.remove('hidden');
+            };
+            reader.readAsArrayBuffer(uploadedFile);
+        });
+    </script>
+</body>
+</html>
