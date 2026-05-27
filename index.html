@@ -1,400 +1,706 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Consulta de Saldo - Cartões Combustível</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #111827;
+    :root {
+      --teal: #249788;
+      --teal-light: #2db8a7;
+      --indigo: #5a4ac7;
+      --indigo-light: #7b6fd4;
+      --surface: #0f172a;
+      --surface-2: #1e293b;
+      --surface-3: #273346;
+      --border: rgba(255,255,255,0.07);
+      --border-hover: rgba(255,255,255,0.14);
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
     }
 
-    .card {
-      background: white;
-      border-radius: 1rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, .2);
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--surface);
+      color: var(--text-primary);
+      min-height: 100vh;
+    }
+
+    /* Subtle grid bg */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(36,151,136,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(36,151,136,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page-wrapper {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, rgba(36,151,136,0.15) 0%, rgba(90,74,199,0.15) 100%);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+    }
+
+    .logo-ring {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--teal), var(--indigo));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    /* Metric cards */
+    .metric-card {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      transition: border-color 0.2s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .metric-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      border-radius: 16px 16px 0 0;
+    }
+
+    .metric-card.green::before { background: linear-gradient(90deg, #10b981, #34d399); }
+    .metric-card.blue::before  { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+    .metric-card.purple::before{ background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
+    .metric-card.orange::before{ background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+
+    .metric-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+    }
+
+    .metric-icon {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+      margin-bottom: 0.75rem;
+    }
+
+    .metric-label {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .metric-value {
+      font-size: 1.6rem;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    /* Filter section */
+    .filter-section {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
       padding: 1.5rem;
     }
 
-    th,
-    td {
-      text-align: center;
-      padding: 0.75rem 0.5rem;
+    .filter-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      display: block;
     }
 
-    .table-responsive {
-      overflow-x: auto;
+    .filter-input, .filter-select {
+      width: 100%;
+      background: var(--surface-3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.6rem 0.9rem;
+      color: var(--text-primary);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13.5px;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      appearance: none;
+      -webkit-appearance: none;
     }
+
+    .filter-input::placeholder { color: var(--text-muted); }
+
+    .filter-input:focus, .filter-select:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(36,151,136,0.15);
+    }
+
+    .select-wrapper {
+      position: relative;
+    }
+
+    .select-wrapper::after {
+      content: '';
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0; height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid var(--text-muted);
+      pointer-events: none;
+    }
+
+    /* Active filter chips */
+    .filter-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px 3px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 500;
+      background: rgba(36,151,136,0.15);
+      border: 1px solid rgba(36,151,136,0.35);
+      color: #2db8a7;
+    }
+
+    .filter-chip button {
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: rgba(36,151,136,0.25);
+      border: none;
+      color: #2db8a7;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px;
+      line-height: 1;
+    }
+
+    .btn-clear {
+      padding: 0.55rem 1.1rem;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-secondary);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+
+    .btn-clear:hover {
+      background: var(--surface-3);
+      border-color: var(--border-hover);
+      color: var(--text-primary);
+    }
+
+    /* Table */
+    .table-section {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .table-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead tr {
+      background: rgba(36,151,136,0.06);
+      border-bottom: 1px solid var(--border);
+    }
+
+    thead th {
+      padding: 0.7rem 1rem;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    thead th:not(:first-child) { text-align: right; }
+
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.12s;
+    }
+
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: rgba(255,255,255,0.025); }
+
+    tbody td {
+      padding: 0.8rem 1rem;
+      font-size: 13.5px;
+      text-align: right;
+    }
+
+    tbody td:first-child {
+      text-align: left;
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+      color: var(--text-primary);
+    }
+
+    tbody td:nth-child(2) { text-align: left; }
 
     .status-badge {
-      display: inline-block;
-      padding: 0.25rem 0.75rem;
-      border-radius: 9999px;
-      font-size: 0.75rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 11.5px;
       font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .status-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
     }
 
     .status-desbloqueado {
-      background-color: #10b981;
-      color: white;
+      background: rgba(16,185,129,0.12);
+      color: #34d399;
+      border: 1px solid rgba(16,185,129,0.25);
     }
+
+    .status-desbloqueado::before { background: #34d399; }
 
     .status-bloqueado {
-      background-color: #ef4444;
-      color: white;
+      background: rgba(239,68,68,0.12);
+      color: #f87171;
+      border: 1px solid rgba(239,68,68,0.25);
     }
 
-    .gradient-header {
-      background: linear-gradient(135deg, #249788 0%, #5a4ac7 100%);
+    .status-bloqueado::before { background: #f87171; }
+
+    .val-balance  { color: #34d399; font-weight: 600; }
+    .val-recharge { color: var(--text-secondary); }
+    .val-extra    { color: #60a5fa; }
+    .val-total    { color: #a78bfa; font-weight: 600; }
+
+    /* Pagination */
+    .pagination {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
     }
 
-    .card-number {
-      font-family: 'Courier New', monospace;
-      font-weight: 600;
-      letter-spacing: 1px;
+    .per-page-select {
+      background: var(--surface-3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-secondary);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      padding: 4px 8px;
+      outline: none;
     }
 
-    .search-highlight {
-      background-color: #fef3c7;
+    .btn-page {
+      padding: 5px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface-3);
+      color: var(--text-secondary);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.15s;
     }
+
+    .btn-page:hover:not(:disabled) {
+      border-color: var(--teal);
+      color: var(--teal-light);
+    }
+
+    .btn-page:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    .page-info {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .page-info span { color: var(--text-primary); font-weight: 500; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--surface); }
+    ::-webkit-scrollbar-thumb { background: var(--surface-3); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--border-hover); }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in { animation: fadeIn 0.3s ease both; }
   </style>
 </head>
 
-<body class="p-6">
+<body>
+<div class="page-wrapper max-w-[1600px] mx-auto px-5 py-6">
 
-  <div class="max-w-[1600px] mx-auto">
-    <!-- Header -->
-    <header class="gradient-header p-4 rounded-xl shadow-md mb-6">
-      <div class="flex items-center justify-between flex-wrap gap-4">
-        <div class="flex items-center space-x-2 sm:space-x-4">
-          <div class="h-10 w-10 bg-white rounded-full flex items-center justify-center">
-            <span class="text-2xl">💳</span>
-          </div>
-          <h1 class="text-xl sm:text-2xl font-bold text-white">Consulta de Saldo - Cartões Combustível</h1>
-        </div>
-        <span class="text-sm text-white mt-2 sm:mt-0">Atualizado em: <span id="last-updated"></span></span>
+  <!-- Header -->
+  <header class="header rounded-2xl px-5 py-4 mb-6 flex items-center justify-between flex-wrap gap-4">
+    <div class="flex items-center gap-3">
+      <div class="logo-ring">💳</div>
+      <div>
+        <h1 class="text-lg font-semibold text-white leading-tight">Cartões Combustível</h1>
+        <p class="text-xs text-teal-400 mt-0.5" style="color:#2db8a7">Consulta de Saldo</p>
       </div>
-    </header>
+    </div>
+    <div class="flex items-center gap-2 text-sm" style="color:var(--text-muted)">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      Atualizado em <span id="last-updated" style="color:var(--text-secondary); margin-left:4px"></span>
+    </div>
+  </header>
 
-    <!-- Cards Resumo Geral -->
-    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-      <div class="card p-4 flex flex-col justify-center items-center text-center border-l-4 border-green-500">
-        <p class="text-sm font-medium text-gray-600 mb-1">Total de Cartões</p>
-        <p class="text-2xl font-bold text-green-700" id="total-cards">0</p>
-      </div>
-      <div class="card p-4 flex flex-col justify-center items-center text-center border-l-4 border-blue-500">
-        <p class="text-sm font-medium text-gray-600 mb-1">Saldo Total</p>
-        <p class="text-2xl font-bold text-blue-700" id="total-balance">R$ 0,00</p>
-      </div>
-      <div class="card p-4 flex flex-col justify-center items-center text-center border-l-4 border-purple-500">
-        <p class="text-sm font-medium text-gray-600 mb-1">Total Recarregado</p>
-        <p class="text-2xl font-bold text-purple-700" id="total-recharged">R$ 0,00</p>
-      </div>
-      <div class="card p-4 flex flex-col justify-center items-center text-center border-l-4 border-orange-500">
-        <p class="text-sm font-medium text-gray-600 mb-1">Cartões Ativos</p>
-        <p class="text-2xl font-bold text-orange-700" id="active-cards">0</p>
-      </div>
-    </section>
+  <!-- Metric Cards -->
+  <section class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6 fade-in">
+    <div class="metric-card green">
+      <div class="metric-icon" style="background:rgba(16,185,129,0.12)">🃏</div>
+      <div class="metric-label">Total de Cartões</div>
+      <div class="metric-value" id="total-cards" style="color:#34d399">0</div>
+    </div>
+    <div class="metric-card blue">
+      <div class="metric-icon" style="background:rgba(59,130,246,0.12)">💰</div>
+      <div class="metric-label">Saldo Total</div>
+      <div class="metric-value" id="total-balance" style="color:#60a5fa; font-size:1.3rem">R$ 0,00</div>
+    </div>
+    <div class="metric-card purple">
+      <div class="metric-icon" style="background:rgba(139,92,246,0.12)">🔄</div>
+      <div class="metric-label">Total Recarregado</div>
+      <div class="metric-value" id="total-recharged" style="color:#a78bfa; font-size:1.3rem">R$ 0,00</div>
+    </div>
+    <div class="metric-card orange">
+      <div class="metric-icon" style="background:rgba(245,158,11,0.12)">✅</div>
+      <div class="metric-label">Cartões Ativos</div>
+      <div class="metric-value" id="active-cards" style="color:#fbbf24">0</div>
+    </div>
+  </section>
 
-    <!-- Filtros -->
-    <section class="card mb-6">
-      <h2 class="text-xl font-semibold mb-4 text-gray-800">Filtros e Busca</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="flex flex-col">
-          <label for="card-search" class="font-medium text-gray-700 block mb-1">Buscar Cartão</label>
-          <input type="text" id="card-search" placeholder="Digite o número do cartão" 
-            class="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500">
+  <!-- Filters -->
+  <section class="filter-section mb-6 fade-in" style="animation-delay:0.05s">
+    <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
+      <h2 class="text-sm font-semibold" style="color:var(--text-secondary); letter-spacing:0.05em; text-transform:uppercase">Filtros</h2>
+      <div id="active-chips" class="flex flex-wrap gap-2"></div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <!-- Busca -->
+      <div>
+        <label class="filter-label" for="card-search">Número do Cartão</label>
+        <div style="position:relative">
+          <svg style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text-muted)" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" id="card-search" placeholder="Buscar por número…"
+            class="filter-input" style="padding-left:2rem">
         </div>
-        <div class="flex flex-col">
-          <label for="status-filter" class="font-medium text-gray-700 block mb-1">Situação</label>
-          <select id="status-filter" 
-            class="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500">
-            <option value="Todos">Todos</option>
-            <option value="Ativo Desbloqueado">Ativo Desbloqueado</option>
-            <option value="Ativo Bloqueado">Ativo Bloqueado</option>
-          </select>
-        </div>
-        <div class="flex flex-col">
-          <label for="balance-filter" class="font-medium text-gray-700 block mb-1">Saldo</label>
-          <select id="balance-filter" 
-            class="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500">
-            <option value="Todos">Todos</option>
-            <option value="Com Saldo">Com Saldo (> R$ 0)</option>
-            <option value="Sem Saldo">Sem Saldo (R$ 0)</option>
-            <option value="Saldo Alto">Saldo Alto (> R$ 500)</option>
-          </select>
-        </div>
-        <div class="flex flex-col">
-          <label for="recharge-filter" class="font-medium text-gray-700 block mb-1">Recarga</label>
-          <select id="recharge-filter" 
-            class="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500">
-            <option value="Todos">Todos</option>
-            <option value="Com Recarga">Com Recarga</option>
-            <option value="Sem Recarga">Sem Recarga</option>
+      </div>
+
+      <!-- Situação -->
+      <div>
+        <label class="filter-label" for="status-filter">Situação</label>
+        <div class="select-wrapper">
+          <select id="status-filter" class="filter-select">
+            <option value="Todos">Todos os status</option>
+            <option value="Ativo Desbloqueado">✅ Desbloqueado</option>
+            <option value="Ativo Bloqueado">🔒 Bloqueado</option>
           </select>
         </div>
       </div>
-      <div class="mt-4 flex justify-end">
-        <button id="clear-filters" 
-          class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition">
-          Limpar Filtros
-        </button>
-      </div>
-    </section>
 
-    <!-- Tabela de Cartões -->
-    <section class="card">
-      <div class="flex justify-between items-center mb-4">
-        <h2 class="text-xl font-semibold text-gray-800">Lista de Cartões</h2>
-        <span class="text-sm text-gray-600">
-          Mostrando <span id="showing-count" class="font-bold">0</span> de <span id="total-count" class="font-bold">0</span> cartões
-        </span>
-      </div>
-
-      <div class="table-responsive">
-        <table class="w-full text-sm border border-gray-200 rounded-lg">
-          <thead class="gradient-header text-white">
-            <tr>
-              <th class="py-3 px-2">Número do Cartão</th>
-              <th class="py-3 px-2">Situação</th>
-              <th class="py-3 px-2">Saldo Atual</th>
-              <th class="py-3 px-2">1ª Quinzena</th>
-              <th class="py-3 px-2">2ª Quinzena</th>
-              <th class="py-3 px-2">Pedido Extra</th>
-              <th class="py-3 px-2">Total Recarregado</th>
-            </tr>
-          </thead>
-          <tbody id="cards-table-body">
-            <tr>
-              <td colspan="7" class="text-center py-8 text-gray-500">Carregando dados...</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Paginação -->
-      <div class="mt-4 flex justify-between items-center">
-        <div class="flex items-center gap-2">
-          <label for="per-page" class="text-sm text-gray-600">Itens por página:</label>
-          <select id="per-page" 
-            class="border border-gray-300 rounded-md p-1 text-sm focus:ring-blue-500 focus:border-blue-500">
-            <option value="20">20</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-            <option value="200">200</option>
+      <!-- Saldo -->
+      <div>
+        <label class="filter-label" for="balance-filter">Saldo</label>
+        <div class="select-wrapper">
+          <select id="balance-filter" class="filter-select">
+            <option value="Todos">Qualquer saldo</option>
+            <option value="Com Saldo">💚 Com Saldo (&gt; R$ 0)</option>
+            <option value="Sem Saldo">⬜ Sem Saldo (R$ 0)</option>
+            <option value="Saldo Alto">🔥 Saldo Alto (&gt; R$ 500)</option>
           </select>
         </div>
-        <div class="flex items-center gap-2">
-          <button id="prev-page" 
-            class="px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition disabled:opacity-50 disabled:cursor-not-allowed">
-            Anterior
-          </button>
-          <span class="text-sm text-gray-600">
-            Página <span id="current-page" class="font-bold">1</span> de <span id="total-pages" class="font-bold">1</span>
-          </span>
-          <button id="next-page" 
-            class="px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition disabled:opacity-50 disabled:cursor-not-allowed">
-            Próxima
-          </button>
+      </div>
+
+      <!-- Recarga -->
+      <div>
+        <label class="filter-label" for="recharge-filter">Recarga</label>
+        <div class="select-wrapper">
+          <select id="recharge-filter" class="filter-select">
+            <option value="Todos">Qualquer recarga</option>
+            <option value="Com Recarga">🔋 Com Recarga</option>
+            <option value="Sem Recarga">🪫 Sem Recarga</option>
+          </select>
         </div>
       </div>
-    </section>
-  </div>
+    </div>
 
-  <script>
-    let allCardsData = [];
-    let filteredData = [];
-    let currentPage = 1;
-    let itemsPerPage = 20;
+    <div class="mt-4 flex justify-end">
+      <button id="clear-filters" class="btn-clear">Limpar filtros</button>
+    </div>
+  </section>
 
-    // Dados dos cartões (será substituído pelos dados reais)
-    const cardsData = [];
+  <!-- Table -->
+  <section class="table-section fade-in" style="animation-delay:0.1s">
+    <div class="table-header">
+      <h2 class="text-sm font-semibold" style="color:var(--text-secondary); letter-spacing:0.05em; text-transform:uppercase">Lista de Cartões</h2>
+      <span class="page-info">
+        Exibindo <span id="showing-count">0</span> de <span id="total-count">0</span> cartões
+      </span>
+    </div>
 
-    function formatCurrency(value) {
-      return Number(value || 0).toLocaleString('pt-BR', {
-        style: 'currency',
-        currency: 'BRL'
-      });
-    }
-
-    function formatCardNumber(cardNumber) {
-      const str = String(cardNumber);
-      return str.replace(/(\d{4})(?=\d)/g, '$1 ');
-    }
-
-    function updateSummaryCards(data) {
-      const totalCards = data.length;
-      const totalBalance = data.reduce((sum, card) => sum + Number(card['Saldo Atual'] || 0), 0);
-      const totalRecharged = data.reduce((sum, card) => sum + Number(card['Total Recarregado no Mês'] || 0), 0);
-      const activeCards = data.filter(card => card['Situação Do Cartão'] === 'Ativo Desbloqueado').length;
-
-      document.getElementById('total-cards').textContent = totalCards.toLocaleString('pt-BR');
-      document.getElementById('total-balance').textContent = formatCurrency(totalBalance);
-      document.getElementById('total-recharged').textContent = formatCurrency(totalRecharged);
-      document.getElementById('active-cards').textContent = activeCards.toLocaleString('pt-BR');
-      document.getElementById('total-count').textContent = totalCards.toLocaleString('pt-BR');
-    }
-
-    function renderTable(data, page = 1) {
-      const tbody = document.getElementById('cards-table-body');
-      const startIndex = (page - 1) * itemsPerPage;
-      const endIndex = startIndex + itemsPerPage;
-      const pageData = data.slice(startIndex, endIndex);
-
-      if (pageData.length === 0) {
-        tbody.innerHTML = `
+    <div style="overflow-x:auto">
+      <table>
+        <thead>
           <tr>
-            <td colspan="7" class="text-center py-8 text-gray-500">Nenhum cartão encontrado com os filtros aplicados.</td>
+            <th>Número do Cartão</th>
+            <th style="text-align:left">Situação</th>
+            <th>Saldo Atual</th>
+            <th>1ª Quinzena</th>
+            <th>2ª Quinzena</th>
+            <th>Pedido Extra</th>
+            <th>Total Recarregado</th>
           </tr>
-        `;
-        document.getElementById('showing-count').textContent = '0';
-        updatePagination(data.length, page);
-        return;
-      }
-
-      tbody.innerHTML = pageData.map(card => {
-        const statusClass = card['Situação Do Cartão'] === 'Ativo Desbloqueado' 
-          ? 'status-desbloqueado' 
-          : 'status-bloqueado';
-
-        const statusText = card['Situação Do Cartão'] === 'Ativo Desbloqueado' 
-          ? 'Desbloqueado' 
-          : 'Bloqueado';
-
-        return `
-          <tr class="border-t border-gray-100 hover:bg-gray-50">
-            <td class="font-medium text-left px-2 py-3 card-number">${formatCardNumber(card['Cartão'])}</td>
-            <td class="py-3">
-              <span class="status-badge ${statusClass}">${statusText}</span>
-            </td>
-            <td class="py-3 font-bold text-green-700">${formatCurrency(card['Saldo Atual'])}</td>
-            <td class="py-3 text-gray-600">${formatCurrency(card['Recarga Primeira Quinzena'])}</td>
-            <td class="py-3 text-gray-600">${formatCurrency(card['Recarga Segunda Quinzena'])}</td>
-            <td class="py-3 text-blue-600">${formatCurrency(card['Pedido Extra'])}</td>
-            <td class="py-3 font-semibold text-purple-700">${formatCurrency(card['Total Recarregado no Mês'])}</td>
+        </thead>
+        <tbody id="cards-table-body">
+          <tr>
+            <td colspan="7" style="text-align:center;padding:3rem;color:var(--text-muted)">Carregando dados…</td>
           </tr>
-        `;
-      }).join('');
+        </tbody>
+      </table>
+    </div>
 
-      document.getElementById('showing-count').textContent = pageData.length.toLocaleString('pt-BR');
+    <!-- Pagination -->
+    <div class="pagination">
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-size:13px;color:var(--text-muted)">Itens por página:</span>
+        <select id="per-page" class="per-page-select">
+          <option value="20">20</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+          <option value="200">200</option>
+        </select>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <button id="prev-page" class="btn-page">← Anterior</button>
+        <span class="page-info">Página <span id="current-page">1</span> de <span id="total-pages">1</span></span>
+        <button id="next-page" class="btn-page">Próxima →</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  let allCardsData = [];
+  let filteredData = [];
+  let currentPage = 1;
+  let itemsPerPage = 20;
+
+  function formatCurrency(value) {
+    return Number(value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  }
+
+  function formatCardNumber(cardNumber) {
+    return String(cardNumber).replace(/(\d{4})(?=\d)/g, '$1 ');
+  }
+
+  function updateSummaryCards(data) {
+    const totalBalance   = data.reduce((s, c) => s + Number(c['Saldo Atual'] || 0), 0);
+    const totalRecharged = data.reduce((s, c) => s + Number(c['Total Recarregado no Mês'] || 0), 0);
+    const activeCards    = data.filter(c => c['Situação Do Cartão'] === 'Ativo Desbloqueado').length;
+
+    document.getElementById('total-cards').textContent     = data.length.toLocaleString('pt-BR');
+    document.getElementById('total-balance').textContent   = formatCurrency(totalBalance);
+    document.getElementById('total-recharged').textContent = formatCurrency(totalRecharged);
+    document.getElementById('active-cards').textContent    = activeCards.toLocaleString('pt-BR');
+    document.getElementById('total-count').textContent     = data.length.toLocaleString('pt-BR');
+  }
+
+  function renderTable(data, page = 1) {
+    const tbody = document.getElementById('cards-table-body');
+    const start = (page - 1) * itemsPerPage;
+    const pageData = data.slice(start, start + itemsPerPage);
+
+    if (!pageData.length) {
+      tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:3rem;color:var(--text-muted)">Nenhum cartão encontrado.</td></tr>`;
+      document.getElementById('showing-count').textContent = '0';
       updatePagination(data.length, page);
+      return;
     }
 
-    function updatePagination(totalItems, page) {
-      const totalPages = Math.ceil(totalItems / itemsPerPage);
-      document.getElementById('current-page').textContent = page;
-      document.getElementById('total-pages').textContent = totalPages;
+    tbody.innerHTML = pageData.map(card => {
+      const isActive = card['Situação Do Cartão'] === 'Ativo Desbloqueado';
+      return `
+        <tr>
+          <td>${formatCardNumber(card['Cartão'])}</td>
+          <td><span class="status-badge ${isActive ? 'status-desbloqueado' : 'status-bloqueado'}">${isActive ? 'Desbloqueado' : 'Bloqueado'}</span></td>
+          <td class="val-balance">${formatCurrency(card['Saldo Atual'])}</td>
+          <td class="val-recharge">${formatCurrency(card['Recarga Primeira Quinzena'])}</td>
+          <td class="val-recharge">${formatCurrency(card['Recarga Segunda Quinzena'])}</td>
+          <td class="val-extra">${formatCurrency(card['Pedido Extra'])}</td>
+          <td class="val-total">${formatCurrency(card['Total Recarregado no Mês'])}</td>
+        </tr>`;
+    }).join('');
 
-      const prevBtn = document.getElementById('prev-page');
-      const nextBtn = document.getElementById('next-page');
+    document.getElementById('showing-count').textContent = pageData.length.toLocaleString('pt-BR');
+    updatePagination(data.length, page);
+  }
 
-      prevBtn.disabled = page === 1;
-      nextBtn.disabled = page >= totalPages;
-    }
+  function updatePagination(total, page) {
+    const totalPages = Math.max(1, Math.ceil(total / itemsPerPage));
+    document.getElementById('current-page').textContent = page;
+    document.getElementById('total-pages').textContent  = totalPages;
+    document.getElementById('prev-page').disabled = page === 1;
+    document.getElementById('next-page').disabled = page >= totalPages;
+  }
 
-    function applyFilters() {
-      const cardSearch = document.getElementById('card-search').value.trim();
-      const statusFilter = document.getElementById('status-filter').value;
-      const balanceFilter = document.getElementById('balance-filter').value;
-      const rechargeFilter = document.getElementById('recharge-filter').value;
+  function updateChips() {
+    const chips = document.getElementById('active-chips');
+    const filters = [
+      { id: 'card-search',     label: () => { const v = document.getElementById('card-search').value.trim(); return v ? `Cartão: ${v}` : null; } },
+      { id: 'status-filter',   label: () => { const v = document.getElementById('status-filter').value; return v !== 'Todos' ? v.replace('Ativo ', '') : null; } },
+      { id: 'balance-filter',  label: () => { const v = document.getElementById('balance-filter').value; return v !== 'Todos' ? v : null; } },
+      { id: 'recharge-filter', label: () => { const v = document.getElementById('recharge-filter').value; return v !== 'Todos' ? v : null; } },
+    ];
 
-      filteredData = allCardsData.filter(card => {
-        // Filtro de busca por número do cartão
-        if (cardSearch && !String(card['Cartão']).includes(cardSearch)) {
-          return false;
-        }
+    chips.innerHTML = filters
+      .map(f => { const lbl = f.label(); return lbl ? `<span class="filter-chip">${lbl}<button onclick="clearFilter('${f.id}')">✕</button></span>` : ''; })
+      .join('');
+  }
 
-        // Filtro de situação
-        if (statusFilter !== 'Todos' && card['Situação Do Cartão'] !== statusFilter) {
-          return false;
-        }
+  function clearFilter(id) {
+    const el = document.getElementById(id);
+    if (el.tagName === 'INPUT') el.value = '';
+    else el.value = 'Todos';
+    applyFilters();
+  }
 
-        // Filtro de saldo
-        const balance = Number(card['Saldo Atual'] || 0);
-        if (balanceFilter === 'Com Saldo' && balance <= 0) return false;
-        if (balanceFilter === 'Sem Saldo' && balance > 0) return false;
-        if (balanceFilter === 'Saldo Alto' && balance <= 500) return false;
+  function applyFilters() {
+    const cardSearch     = document.getElementById('card-search').value.trim();
+    const statusFilter   = document.getElementById('status-filter').value;
+    const balanceFilter  = document.getElementById('balance-filter').value;
+    const rechargeFilter = document.getElementById('recharge-filter').value;
 
-        // Filtro de recarga
-        const totalRecharge = Number(card['Total Recarregado no Mês'] || 0);
-        if (rechargeFilter === 'Com Recarga' && totalRecharge <= 0) return false;
-        if (rechargeFilter === 'Sem Recarga' && totalRecharge > 0) return false;
+    filteredData = allCardsData.filter(card => {
+      if (cardSearch && !String(card['Cartão']).includes(cardSearch)) return false;
+      if (statusFilter !== 'Todos' && card['Situação Do Cartão'] !== statusFilter) return false;
+      const balance = Number(card['Saldo Atual'] || 0);
+      if (balanceFilter === 'Com Saldo' && balance <= 0) return false;
+      if (balanceFilter === 'Sem Saldo' && balance > 0) return false;
+      if (balanceFilter === 'Saldo Alto' && balance <= 500) return false;
+      const totalRecharge = Number(card['Total Recarregado no Mês'] || 0);
+      if (rechargeFilter === 'Com Recarga' && totalRecharge <= 0) return false;
+      if (rechargeFilter === 'Sem Recarga' && totalRecharge > 0) return false;
+      return true;
+    });
 
-        return true;
-      });
+    currentPage = 1;
+    updateSummaryCards(filteredData);
+    renderTable(filteredData, currentPage);
+    updateChips();
+  }
 
-      currentPage = 1;
+  function clearFilters() {
+    document.getElementById('card-search').value    = '';
+    document.getElementById('status-filter').value  = 'Todos';
+    document.getElementById('balance-filter').value = 'Todos';
+    document.getElementById('recharge-filter').value= 'Todos';
+    applyFilters();
+  }
+
+  async function init() {
+    try {
+      const response = await fetch(`data.json?v=${Date.now()}`);
+      if (!response.ok) throw new Error('Erro ao carregar dados');
+      allCardsData = await response.json();
+      filteredData = [...allCardsData];
       updateSummaryCards(filteredData);
       renderTable(filteredData, currentPage);
+      const now = new Date();
+      document.getElementById('last-updated').textContent =
+        now.toLocaleDateString('pt-BR') + ' ' + now.toLocaleTimeString('pt-BR');
+    } catch (err) {
+      console.error(err);
+      document.getElementById('cards-table-body').innerHTML =
+        `<tr><td colspan="7" style="text-align:center;padding:3rem;color:#f87171">Erro ao carregar os dados. Verifique se o arquivo data.json está disponível.</td></tr>`;
     }
+  }
 
-    function clearFilters() {
-      document.getElementById('card-search').value = '';
-      document.getElementById('status-filter').value = 'Todos';
-      document.getElementById('balance-filter').value = 'Todos';
-      document.getElementById('recharge-filter').value = 'Todos';
-      applyFilters();
-    }
+  document.getElementById('card-search').addEventListener('input', applyFilters);
+  document.getElementById('status-filter').addEventListener('change', applyFilters);
+  document.getElementById('balance-filter').addEventListener('change', applyFilters);
+  document.getElementById('recharge-filter').addEventListener('change', applyFilters);
+  document.getElementById('clear-filters').addEventListener('click', clearFilters);
 
-    async function init() {
-      try {
-        const response = await fetch(`data.json?v=${Date.now()}`);
-        if (!response.ok) throw new Error('Erro ao carregar dados');
+  document.getElementById('per-page').addEventListener('change', e => {
+    itemsPerPage = parseInt(e.target.value);
+    currentPage = 1;
+    renderTable(filteredData, currentPage);
+  });
 
-        allCardsData = await response.json();
-        filteredData = [...allCardsData];
+  document.getElementById('prev-page').addEventListener('click', () => {
+    if (currentPage > 1) { currentPage--; renderTable(filteredData, currentPage); }
+  });
 
-        updateSummaryCards(filteredData);
-        renderTable(filteredData, currentPage);
+  document.getElementById('next-page').addEventListener('click', () => {
+    if (currentPage < Math.ceil(filteredData.length / itemsPerPage)) { currentPage++; renderTable(filteredData, currentPage); }
+  });
 
-        const now = new Date();
-        document.getElementById('last-updated').textContent = now.toLocaleDateString('pt-BR') + ' ' + now.toLocaleTimeString('pt-BR');
-      } catch (err) {
-        console.error('Erro ao carregar dados:', err);
-        document.getElementById('cards-table-body').innerHTML = `
-          <tr>
-            <td colspan="7" class="text-center py-8 text-red-500">
-              Erro ao carregar os dados. Por favor, certifique-se de que o arquivo 'cartoes_data.json' está disponível.
-            </td>
-          </tr>
-        `;
-      }
-    }
-
-    // Event listeners
-    document.getElementById('card-search').addEventListener('input', applyFilters);
-    document.getElementById('status-filter').addEventListener('change', applyFilters);
-    document.getElementById('balance-filter').addEventListener('change', applyFilters);
-    document.getElementById('recharge-filter').addEventListener('change', applyFilters);
-    document.getElementById('clear-filters').addEventListener('click', clearFilters);
-
-    document.getElementById('per-page').addEventListener('change', (e) => {
-      itemsPerPage = parseInt(e.target.value);
-      currentPage = 1;
-      renderTable(filteredData, currentPage);
-    });
-
-    document.getElementById('prev-page').addEventListener('click', () => {
-      if (currentPage > 1) {
-        currentPage--;
-        renderTable(filteredData, currentPage);
-      }
-    });
-
-    document.getElementById('next-page').addEventListener('click', () => {
-      const totalPages = Math.ceil(filteredData.length / itemsPerPage);
-      if (currentPage < totalPages) {
-        currentPage++;
-        renderTable(filteredData, currentPage);
-      }
-    });
-
-    // Inicializar
-    document.addEventListener('DOMContentLoaded', init);
-  </script>
+  document.addEventListener('DOMContentLoaded', init);
+</script>
 </body>
-
 </html>
