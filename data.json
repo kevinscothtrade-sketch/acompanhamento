@@ -242,7 +242,7 @@
   {
     "Cartão": "6056760001931384",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 602.91,
+    "Saldo Atual": 567.91,
     "Recarga Primeira Quinzena": 500,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 0,
@@ -602,7 +602,7 @@
   {
     "Cartão": "6056760001931202",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 250,
+    "Saldo Atual": 220,
     "Recarga Primeira Quinzena": 400,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 0,
@@ -707,7 +707,7 @@
   {
     "Cartão": "6056760001878452",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 295.8,
+    "Saldo Atual": 275.8,
     "Recarga Primeira Quinzena": 500,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 0,
@@ -737,11 +737,11 @@
   {
     "Cartão": "6056760001873149",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 273.02,
+    "Saldo Atual": 754.02,
     "Recarga Primeira Quinzena": 436.3636363636364,
     "Recarga Segunda Quinzena": 0,
-    "Pedido Extra": 0,
-    "Total Recarregado no Mês": 436.3636363636364,
+    "Pedido Extra": 481,
+    "Total Recarregado no Mês": 917.3636363636364,
     "VISITAS": null,
     "PROPOSTAS": null,
     "PROP. FINLZD": null,
@@ -800,8 +800,8 @@
     "Saldo Atual": 0.5,
     "Recarga Primeira Quinzena": 23,
     "Recarga Segunda Quinzena": 0,
-    "Pedido Extra": 0,
-    "Total Recarregado no Mês": 23,
+    "Pedido Extra": 250,
+    "Total Recarregado no Mês": 273,
     "VISITAS": null,
     "PROPOSTAS": null,
     "PROP. FINLZD": null,
@@ -902,7 +902,7 @@
   {
     "Cartão": "6056760001641108",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 304.8,
+    "Saldo Atual": 204.8,
     "Recarga Primeira Quinzena": 500,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 0,
@@ -992,7 +992,7 @@
   {
     "Cartão": "6056760001250066",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 228.08,
+    "Saldo Atual": 28.08,
     "Recarga Primeira Quinzena": 500,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 0,
@@ -2117,7 +2117,7 @@
   {
     "Cartão": "6056760001835734",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 88.59,
+    "Saldo Atual": 15.89,
     "Recarga Primeira Quinzena": 400,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 0,
@@ -2177,7 +2177,7 @@
   {
     "Cartão": "6056760001885184",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 222.93,
+    "Saldo Atual": 172.93,
     "Recarga Primeira Quinzena": 436.3636363636364,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 0,
@@ -2192,7 +2192,7 @@
   {
     "Cartão": "6056760001908572",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 188.02,
+    "Saldo Atual": 10.89,
     "Recarga Primeira Quinzena": 350,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 0,
@@ -2222,7 +2222,7 @@
   {
     "Cartão": "6056760001894293",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 232.32,
+    "Saldo Atual": 132.32,
     "Recarga Primeira Quinzena": 450,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 0,
@@ -2237,7 +2237,7 @@
   {
     "Cartão": "6056760001901320",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 226.16,
+    "Saldo Atual": 100.18,
     "Recarga Primeira Quinzena": 400,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 0,
@@ -2477,11 +2477,11 @@
   {
     "Cartão": "6056760001885176",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 72.76,
+    "Saldo Atual": 606.76,
     "Recarga Primeira Quinzena": 436.3636363636364,
     "Recarga Segunda Quinzena": 0,
-    "Pedido Extra": 0,
-    "Total Recarregado no Mês": 436.3636363636364,
+    "Pedido Extra": 604,
+    "Total Recarregado no Mês": 1040.3636363636365,
     "VISITAS": null,
     "PROPOSTAS": null,
     "PROP. FINLZD": null,
@@ -2627,7 +2627,7 @@
   {
     "Cartão": "6056760001132173",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 76.7,
+    "Saldo Atual": 16.7,
     "Recarga Primeira Quinzena": 400,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 0,
@@ -3197,7 +3197,7 @@
   {
     "Cartão": "6056760001901460",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 400.62,
+    "Saldo Atual": 250.62,
     "Recarga Primeira Quinzena": 400,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 0,
@@ -3287,7 +3287,7 @@
   {
     "Cartão": "6056760001668846",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 220.56,
+    "Saldo Atual": 120.56,
     "Recarga Primeira Quinzena": 400,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 0,
@@ -3482,7 +3482,7 @@
   {
     "Cartão": "6056760001957140",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 180.41,
+    "Saldo Atual": 130.41,
     "Recarga Primeira Quinzena": 400,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 0,
@@ -3632,7 +3632,7 @@
   {
     "Cartão": "6056760001413995",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 177.96,
+    "Saldo Atual": 0.96,
     "Recarga Primeira Quinzena": 500,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 0,
@@ -4217,7 +4217,7 @@
   {
     "Cartão": "6056760001931285",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 160.75,
+    "Saldo Atual": 100.75,
     "Recarga Primeira Quinzena": 400,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 0,
@@ -10217,7 +10217,7 @@
   {
     "Cartão": "6056760001724821",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 382.14,
+    "Saldo Atual": 177.55,
     "Recarga Primeira Quinzena": 509.0909090909091,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 0,
@@ -22292,7 +22292,7 @@
   {
     "Cartão": "6056760001908598",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 0,
+    "Saldo Atual": 250,
     "Recarga Primeira Quinzena": 0,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 250,
