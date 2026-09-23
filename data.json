@@ -347,7 +347,7 @@
   {
     "Cartão": "6056760001803641",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 100.23,
+    "Saldo Atual": 50.23,
     "Recarga Primeira Quinzena": 600,
     "Recarga Segunda Quinzena": 500,
     "Pedido Extra": 100,
@@ -437,7 +437,7 @@
   {
     "Cartão": "6056760001957272",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 976.44,
+    "Saldo Atual": 775.94,
     "Recarga Primeira Quinzena": 400,
     "Recarga Segunda Quinzena": 400,
     "Pedido Extra": 0,
@@ -467,7 +467,7 @@
   {
     "Cartão": "6056760001971828",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 217.91,
+    "Saldo Atual": 10.81,
     "Recarga Primeira Quinzena": 400,
     "Recarga Segunda Quinzena": 400,
     "Pedido Extra": 0,
@@ -677,7 +677,7 @@
   {
     "Cartão": "6056760001931483",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 288,
+    "Saldo Atual": 260.02,
     "Recarga Primeira Quinzena": 350,
     "Recarga Segunda Quinzena": 300,
     "Pedido Extra": 0,
@@ -1292,7 +1292,7 @@
   {
     "Cartão": "6056760001957157",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 80,
+    "Saldo Atual": 0,
     "Recarga Primeira Quinzena": 400,
     "Recarga Segunda Quinzena": 400,
     "Pedido Extra": 0,
@@ -1607,7 +1607,7 @@
   {
     "Cartão": "6056760001908648",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 30.59,
+    "Saldo Atual": 10.59,
     "Recarga Primeira Quinzena": 400,
     "Recarga Segunda Quinzena": 400,
     "Pedido Extra": 0,
@@ -1667,7 +1667,7 @@
   {
     "Cartão": "6056760001931285",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 43.52,
+    "Saldo Atual": 13.52,
     "Recarga Primeira Quinzena": 400,
     "Recarga Segunda Quinzena": 400,
     "Pedido Extra": 0,
@@ -2957,26 +2957,11 @@
   {
     "Cartão": "6056760001310464",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 0.05,
+    "Saldo Atual": 200.05,
     "Recarga Primeira Quinzena": 500,
     "Recarga Segunda Quinzena": 500,
     "Pedido Extra": 0,
     "Total Recarregado no Mês": 1000,
-    "VISITAS": null,
-    "PROPOSTAS": null,
-    "PROP. FINLZD": null,
-    "MENSALIDADES": null,
-    "TKT MÉD": null,
-    "STATUS": ""
-  },
-  {
-    "Cartão": "6056760001901221",
-    "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 0.1,
-    "Recarga Primeira Quinzena": 0,
-    "Recarga Segunda Quinzena": 0,
-    "Pedido Extra": 0,
-    "Total Recarregado no Mês": 0,
     "VISITAS": null,
     "PROPOSTAS": null,
     "PROP. FINLZD": null,
@@ -13907,7 +13892,7 @@
   {
     "Cartão": "6056760001724235",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 262.74,
+    "Saldo Atual": 162.74,
     "Recarga Primeira Quinzena": 0,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 400,
@@ -16997,7 +16982,7 @@
   {
     "Cartão": "6056760001971703",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 40,
+    "Saldo Atual": 240,
     "Recarga Primeira Quinzena": 0,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 250,
@@ -20777,7 +20762,7 @@
   {
     "Cartão": "6056760001641181",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 113.26,
+    "Saldo Atual": 13.26,
     "Recarga Primeira Quinzena": 450,
     "Recarga Segunda Quinzena": 300,
     "Pedido Extra": 200,
@@ -22517,7 +22502,7 @@
   {
     "Cartão": "6056760001971661",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 400.63,
+    "Saldo Atual": 200.13,
     "Recarga Primeira Quinzena": 0,
     "Recarga Segunda Quinzena": 400,
     "Pedido Extra": 0,
@@ -27301,12 +27286,12 @@
   },
   {
     "Cartão": "6056760001976728",
-    "Situação Do Cartão": "Ativo Bloqueado",
-    "Saldo Atual": 0,
+    "Situação Do Cartão": "Ativo Desbloqueado",
+    "Saldo Atual": 50.1,
     "Recarga Primeira Quinzena": 0,
     "Recarga Segunda Quinzena": 0,
-    "Pedido Extra": 0,
-    "Total Recarregado no Mês": 0,
+    "Pedido Extra": 50,
+    "Total Recarregado no Mês": 50,
     "VISITAS": null,
     "PROPOSTAS": null,
     "PROP. FINLZD": null,
