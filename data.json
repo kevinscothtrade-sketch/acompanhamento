@@ -92,7 +92,7 @@
   {
     "Cartão": "6056760001648129",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 550,
+    "Saldo Atual": 500,
     "Recarga Primeira Quinzena": 650,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 0,
@@ -242,7 +242,7 @@
   {
     "Cartão": "6056760001671568",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 454.91,
+    "Saldo Atual": 32.46,
     "Recarga Primeira Quinzena": 400,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 0,
@@ -527,7 +527,7 @@
   {
     "Cartão": "6056760001971398",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 284.48,
+    "Saldo Atual": 106.39,
     "Recarga Primeira Quinzena": 400,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 0,
@@ -707,7 +707,7 @@
   {
     "Cartão": "6056760001931400",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 177.37,
+    "Saldo Atual": 505.37,
     "Recarga Primeira Quinzena": 600,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 0,
@@ -962,7 +962,7 @@
   {
     "Cartão": "6056760001671519",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 237.87,
+    "Saldo Atual": 0.87,
     "Recarga Primeira Quinzena": 400,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 0,
@@ -1022,7 +1022,7 @@
   {
     "Cartão": "6056760001971828",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 232.18,
+    "Saldo Atual": 197.18,
     "Recarga Primeira Quinzena": 400,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 0,
@@ -5731,8 +5731,8 @@
   },
   {
     "Cartão": "6056760002012721",
-    "Situação Do Cartão": "Ativo Bloqueado",
-    "Saldo Atual": 0,
+    "Situação Do Cartão": "Ativo Desbloqueado",
+    "Saldo Atual": 400,
     "Recarga Primeira Quinzena": 0,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 0,
@@ -6736,8 +6736,8 @@
   },
   {
     "Cartão": "6056760002012788",
-    "Situação Do Cartão": "Ativo Bloqueado",
-    "Saldo Atual": 0,
+    "Situação Do Cartão": "Ativo Desbloqueado",
+    "Saldo Atual": 400,
     "Recarga Primeira Quinzena": 0,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 0,
@@ -7156,8 +7156,8 @@
   },
   {
     "Cartão": "6056760002012754",
-    "Situação Do Cartão": "Ativo Bloqueado",
-    "Saldo Atual": 0,
+    "Situação Do Cartão": "Ativo Desbloqueado",
+    "Saldo Atual": 400,
     "Recarga Primeira Quinzena": 0,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 0,
@@ -8956,8 +8956,8 @@
   },
   {
     "Cartão": "6056760002012804",
-    "Situação Do Cartão": "Ativo Bloqueado",
-    "Saldo Atual": 0,
+    "Situação Do Cartão": "Ativo Desbloqueado",
+    "Saldo Atual": 400,
     "Recarga Primeira Quinzena": 0,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 0,
@@ -11162,7 +11162,7 @@
   {
     "Cartão": "6056760002012606",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 400,
+    "Saldo Atual": 300,
     "Recarga Primeira Quinzena": 0,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 0,
@@ -13952,7 +13952,7 @@
   {
     "Cartão": "6056760001871127",
     "Situação Do Cartão": "Ativo Desbloqueado",
-    "Saldo Atual": 0,
+    "Saldo Atual": 500,
     "Recarga Primeira Quinzena": 0,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 0,
@@ -14611,8 +14611,8 @@
   },
   {
     "Cartão": "6056760002012705",
-    "Situação Do Cartão": "Ativo Bloqueado",
-    "Saldo Atual": 0,
+    "Situação Do Cartão": "Ativo Desbloqueado",
+    "Saldo Atual": 400,
     "Recarga Primeira Quinzena": 0,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 0,
@@ -25771,8 +25771,8 @@
   },
   {
     "Cartão": "6056760002012713",
-    "Situação Do Cartão": "Ativo Bloqueado",
-    "Saldo Atual": 0,
+    "Situação Do Cartão": "Ativo Desbloqueado",
+    "Saldo Atual": 400,
     "Recarga Primeira Quinzena": 0,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 0,
@@ -25786,8 +25786,8 @@
   },
   {
     "Cartão": "6056760002012747",
-    "Situação Do Cartão": "Ativo Bloqueado",
-    "Saldo Atual": 0,
+    "Situação Do Cartão": "Ativo Desbloqueado",
+    "Saldo Atual": 400,
     "Recarga Primeira Quinzena": 0,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 0,
@@ -29356,8 +29356,8 @@
   },
   {
     "Cartão": "6056760002012762",
-    "Situação Do Cartão": "Ativo Bloqueado",
-    "Saldo Atual": 0,
+    "Situação Do Cartão": "Ativo Desbloqueado",
+    "Saldo Atual": 400,
     "Recarga Primeira Quinzena": 0,
     "Recarga Segunda Quinzena": 0,
     "Pedido Extra": 0,
